@@ -1,0 +1,27 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+db.sqlite3
+
+# Node
+node_modules/
+**/node_modules/
+
+# React
+dist/
+build/
+
+# Expo
+.expo/
+.expo-shared/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env.*
+!.env.example

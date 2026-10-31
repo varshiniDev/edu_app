@@ -1,0 +1,366 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+
+/* ================= THEME: edit this block to restyle the whole web app ================= */
+:root {
+  --brand: 29 78 216;     /* primary blue   */
+  --brand-2: 124 58 237;  /* gradient end (violet) */
+  --accent: 249 115 22;   /* orange         */
+  --page: 241 245 249;    /* page background */
+  --radius: 14px;
+  --speed: .28s;          /* animation speed */
+}
+body { background: rgb(var(--page)); color: #0f172a; font-family: Inter, system-ui, "Segoe UI", sans-serif; }
+.grad-brand { background-image: linear-gradient(135deg, rgb(var(--brand)), rgb(var(--brand-2))); }
+.grad-accent { background-image: linear-gradient(135deg, rgb(var(--accent)), #f43f5e); }
+.card { background: #fff; border-radius: var(--radius); box-shadow: 0 1px 3px rgb(15 23 42 / .08), 0 8px 24px -12px rgb(15 23 42 / .12); }
+.label { display: block; font-size: .75rem; font-weight: 600; color: #475569; margin-bottom: .25rem; }
+.input { width: 100%; border: 1px solid #cbd5e1; border-radius: 10px; padding: .55rem .75rem; background: #fff; font-size: .9rem; transition: box-shadow var(--speed), border-color var(--speed); }
+.input:focus { outline: none; border-color: rgb(var(--brand)); box-shadow: 0 0 0 3px rgb(var(--brand) / .18); }
+.input:disabled { background: #f1f5f9; color: #94a3b8; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; border-radius: 10px; padding: .55rem 1rem; font-size: .875rem; font-weight: 600; transition: transform .15s, box-shadow var(--speed), opacity var(--speed); }
+.btn:active { transform: scale(.97); } .btn:disabled { opacity: .5; pointer-events: none; }
+.btn-primary { color: #fff; background-image: linear-gradient(135deg, rgb(var(--brand)), rgb(var(--brand-2))); box-shadow: 0 6px 16px -6px rgb(var(--brand) / .6); }
+.btn-primary:hover { box-shadow: 0 8px 20px -6px rgb(var(--brand) / .8); transform: translateY(-1px); }
+.btn-ghost { border: 1px solid #cbd5e1; background: #fff; color: #334155; } .btn-ghost:hover { background: #f8fafc; }
+.btn-danger { color: #fff; background: #dc2626; } .btn-danger:hover { background: #b91c1c; }
+.icon-btn { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; transition: transform .15s, background var(--speed); }
+.icon-btn:hover { transform: translateY(-2px) scale(1.08); }
+.fab { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 9999px; color: #fff; transition: transform .2s, box-shadow var(--speed);
+  background-image: linear-gradient(135deg, rgb(var(--accent)), #f43f5e); box-shadow: 0 8px 20px -6px rgb(var(--accent) / .7); }
+.fab:hover { transform: rotate(90deg) scale(1.08); }
+.th { text-align: center; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 700; color: #475569; padding: .8rem .75rem; background: rgb(var(--brand) / .06); }
+.td { text-align: center; padding: .7rem .75rem; font-size: .875rem; vertical-align: middle; }
+.tr-hover { transition: background var(--speed); } .tr-hover:hover { background: rgb(var(--brand) / .04); }
+.nav-link { display: flex; align-items: center; gap: .6rem; padding: .55rem .75rem; border-radius: 10px; color: #475569; transition: all var(--speed); }
+.nav-link:hover { background: rgb(var(--brand) / .08); transform: translateX(3px); }
+.nav-link.active { color: #fff; background-image: linear-gradient(135deg, rgb(var(--brand)), rgb(var(--brand-2))); box-shadow: 0 6px 16px -8px rgb(var(--brand) / .7); }
+
+/* ================= Minimal animations ================= */
+@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes slideRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes pop { from { opacity: 0; transform: scale(.95) translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.page-enter { animation: slideUp .4s ease both; }
+.modal-enter { animation: pop .22s ease both; }
+.overlay-enter { animation: fade .2s ease both; }
+.toast-enter { animation: slideRight .3s ease both; }
+.row-enter { animation: slideUp .35s ease both; animation-delay: calc(var(--i, 0) * 35ms); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* Full dashboard background */
+.dashboard-bg {
+  background: linear-gradient(
+    135deg,
+    #eef2ff,
+    #f8faff,
+    #f5edff,
+    #ecfeff
+  );
+  background-size: 300% 300%;
+  animation: backgroundFlow 16s ease infinite;
+  isolation: isolate;
+}
+
+@keyframes backgroundFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Floating background bubbles */
+.background-orb {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(5px);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: floatOrb 12s ease-in-out infinite;
+}
+
+.orb-one {
+  width: 280px;
+  height: 280px;
+  background: #818cf8;
+  top: 5%;
+  right: -100px;
+}
+
+.orb-two {
+  width: 230px;
+  height: 230px;
+  background: #c084fc;
+  top: 45%;
+  left: -100px;
+  animation-delay: -3s;
+}
+
+.orb-three {
+  width: 190px;
+  height: 190px;
+  background: #67e8f9;
+  bottom: 5%;
+  right: 15%;
+  animation-delay: -6s;
+}
+
+.orb-four {
+  width: 130px;
+  height: 130px;
+  background: #f9a8d4;
+  top: 25%;
+  left: 40%;
+  animation-delay: -8s;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(35px, -40px); }
+  50% { transform: translate(-20px, 35px); }
+  75% { transform: translate(30px, 20px); }
+}
+
+/* Small floating particles */
+.floating-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+.particle-one { top: 20%; left: 20%; }
+.particle-two { top: 60%; right: 12%; animation-delay: -2s; }
+.particle-three { top: 85%; left: 35%; animation-delay: -4s; }
+.particle-four { top: 40%; right: 40%; animation-delay: -6s; }
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-45px) scale(1.5); }
+}
+
+/* Welcome banner */
+.welcome-banner {
+  animation: welcomeEnter 0.8s ease both;
+}
+
+@keyframes welcomeEnter {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.10);
+  animation: circleFloat 8s ease-in-out infinite;
+}
+
+.circle-one {
+  width: 240px;
+  height: 240px;
+  right: 5%;
+  top: -100px;
+}
+
+.circle-two {
+  width: 150px;
+  height: 150px;
+  right: 25%;
+  bottom: -100px;
+  animation-delay: -3s;
+}
+
+.circle-three {
+  width: 80px;
+  height: 80px;
+  right: 40%;
+  top: 10%;
+  animation-delay: -5s;
+}
+
+@keyframes circleFloat {
+  50% { transform: translateY(-25px) scale(1.1); }
+}
+
+.welcome-icon {
+  position: absolute;
+  right: 9%;
+  bottom: 25%;
+  width: 105px;
+  height: 105px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.16);
+  backdrop-filter: blur(12px);
+  animation: iconFloat 4s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  50% { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* Interactive 3D dashboard cards */
+.interactive-card {
+  position: relative;
+  isolation: isolate;
+  min-height: 185px;
+  padding: 25px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 26px;
+  color: white;
+  cursor: pointer;
+
+  transform:
+    perspective(1000px)
+    rotateX(var(--rotateX, 0deg))
+    rotateY(var(--rotateY, 0deg))
+    translateY(0)
+    scale(1);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.3s ease;
+
+  box-shadow: 0 12px 30px rgba(50,50,100,0.10);
+  animation: cardAppear 0.7s ease both;
+  transform-style: preserve-3d;
+}
+
+.interactive-card:hover {
+  transform:
+    perspective(1000px)
+    rotateX(var(--rotateX, 0deg))
+    rotateY(var(--rotateY, 0deg))
+    translateY(-12px)
+    scale(1.035);
+
+  box-shadow: 0 25px 45px rgba(50,50,100,0.22);
+}
+
+/* Light follows mouse */
+.card-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle 150px at var(--mouseX, 50%) var(--mouseY, 50%),
+    rgba(255,255,255,0.35),
+    transparent 75%
+  );
+  transition: opacity 0.3s ease;
+}
+
+.interactive-card:hover .card-shine {
+  opacity: 1;
+}
+
+/* Icon container */
+.card-icon {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 17px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  transition: transform 0.4s ease;
+}
+
+.interactive-card:hover .card-icon {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+/* Decorative background */
+.card-decoration {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  right: -45px;
+  bottom: -65px;
+  border: 25px solid rgba(255,255,255,0.13);
+  border-radius: 50%;
+  transition: transform 0.6s ease;
+}
+
+.interactive-card:hover .card-decoration {
+  transform: scale(1.5) rotate(40deg);
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staff/student message */
+.role-message {
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 25px;
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 15px 35px rgba(50,50,100,0.06);
+  animation: welcomeEnter 0.8s ease both;
+}
+
+.role-message h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-top: 12px;
+}
+
+.role-message p {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 8px;
+  line-height: 1.7;
+}
+
+/* Mobile and accessibility */
+@media (max-width: 640px) {
+  .background-orb {
+    opacity: 0.25;
+  }
+
+  .interactive-card:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-bg,
+  .background-orb,
+  .floating-particle,
+  .welcome-banner,
+  .welcome-circle,
+  .welcome-icon,
+  .interactive-card {
+    animation: none !important;
+  }
+
+  .interactive-card,
+  .interactive-card:hover {
+    transform: none;
+    transition: none;
+  }
+}
