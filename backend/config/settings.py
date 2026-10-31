@@ -6,7 +6,10 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or ("dev-only-insecure-key" if DEBUG else None)
 if not SECRET_KEY:
     raise RuntimeError("Set DJANGO_SECRET_KEY")
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "edu-app-g56k.onrender.com"
+).split(",")
 INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes",
     "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles",
