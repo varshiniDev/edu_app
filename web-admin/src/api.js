@@ -1,5 +1,5 @@
 import axios from "axios";
-export const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
+export const API = import.meta.env.VITE_API_URL || "https://edu-app-g56k.onrender.com/api";
 const api = axios.create({ baseURL: API });
 api.interceptors.request.use(c => { const t = localStorage.getItem("access"); if (t) c.headers.Authorization = `Bearer ${t}`; return c; });
 api.interceptors.response.use(r => r, async e => {
